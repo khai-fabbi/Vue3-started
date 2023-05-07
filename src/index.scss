@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply mx-auto antialiased font-primary text-default;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 767px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  html {
+    font-size: 18px;
+  }
+}

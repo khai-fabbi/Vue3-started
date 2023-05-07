@@ -1,5 +1,13 @@
 import { createApp } from 'vue'
-import './index.css'
+import './index.scss'
 import App from './App.vue'
+import router from './routers'
+import { createPinia } from 'pinia'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.use(createPinia())
+// app.config.errorHandler = (err) => {
+//   alert(err)
+// }
+app.mount('#app')

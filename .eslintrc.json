@@ -9,12 +9,13 @@
     "plugin:vue/vue3-recommended",
     "eslint:recommended",
     "@vue/typescript/recommended",
-    "prettier",
-    "prettier/vue"
+    "@vue/eslint-config-typescript",
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 2021
   },
   "plugins": [],
-  "rules": {}
+  "rules": { "vue/multi-word-component-names": 0, "vue/component-definition-name-casing": "off" },
+  "ignorePatterns": ["node_modules/*", "dist/*", "public/*"] //  các thư mục trong mảng này nó sẽ bỏ qua và không check lỗi
 }
