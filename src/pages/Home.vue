@@ -1,15 +1,5 @@
 <template>
   <button class="btn btn-primary" @click="onClickButton">Click me</button>
-  <!-- The button to open modal -->
-  <label for="my-modal" class="btn btn-info">Open Modal</label>
-  <Teleport to="body">
-    <modal-base title="Learning Vuejs" @submit="handleSubmitModal">
-      <p>Test Modal</p>
-      <template #footer>
-        <footer className="text-sm font-bold italic">Foooter</footer>
-      </template>
-    </modal-base>
-  </Teleport>
   <quiz-form />
 
   <div class="mt-10">
@@ -18,14 +8,12 @@
   </div>
 </template>
 <script>
-  import Modal from '@/components/Modal.vue'
   import QuizForm from '@/components/QuizForm.vue'
   import User from './User.vue'
   import { ref } from 'vue'
   export default {
     name: 'HomePage',
     components: {
-      ModalBase: Modal,
       QuizForm,
       UserPage: User,
     },
