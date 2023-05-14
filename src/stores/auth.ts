@@ -1,16 +1,16 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
-
-interface IUser {
+interface User {
+  id: string
   email: string
-  name: string
+  name: string | null
+  avatar: string
 }
-
 export const useAuthStore = defineStore('auth', () => {
   const isLoggedIn = ref(false)
-  const info = ref<IUser | null>(null)
+  const info = ref<User | null>(null)
 
-  const setInfo = (user: IUser) => {
+  const setInfo = (user: User) => {
     info.value = user
   }
 

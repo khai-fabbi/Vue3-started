@@ -37,8 +37,53 @@
         <li>
           <router-link class="font-bold capitalize" to="/about">About</router-link>
         </li>
+        <label v-if="!authStore.isLoggedIn" class="btn btn-info" for="modal-login-id">Sign-In</label>
+        <div v-else class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full">
+              <img
+                src="https://plus.unsplash.com/premium_photo-1666264200738-6235d12994ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+              />
+            </div>
+          </label>
+          <ul tabindex="0" class="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+            <li>
+              <a class="justify-between">
+                Profile
+                <span class="badge">New</span>
+              </a>
+            </li>
+            <li><a>Settings</a></li>
+            <li><a>Logout</a></li>
+          </ul>
+        </div>
       </ul>
     </div>
   </nav>
+  <modal-login @submit="handleLogin" />
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useAuthStore } from '@/stores/auth'
+  import ModalLogin from './modal/ModalLogin.vue'
+  import { loginUserFn } from '@/api/authApi'
+  import Cookies from 'js-cookie'
+  import { getMeFn } from '@/api/authApi'
+  const authStore = useAuthStore()
+  const handleLogin = async (formValue: { email: string; password: string }) => {
+    try {
+      const res = await loginUserFn(formValue)
+      if (res.data) {
+        Cookies.set('access_token', res.data.access)
+        Cookies.set('refresh_token', res.data.refresh)
+        const response = await getMeFn()
+        const user = response.data
+        if (user) {
+          authStore.setIsLoggedIn(true)
+          authStore.setInfo(user)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+</script>

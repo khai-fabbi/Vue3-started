@@ -4,7 +4,7 @@
     <input :id="`${modalId}`" type="checkbox" class="modal-toggle" />
     <label :htmlFor="modalId" class="cursor-pointer modal">
       <label class="relative modal-box" htmlFor="">
-        <h3 class="text-lg font-bold">
+        <h3 class="text-2xl font-bold text-center">
           {{ title }}
         </h3>
         <p class="py-4">

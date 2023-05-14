@@ -1,17 +1,20 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { NavigationGuardNext, RouteLocationNormalized, createRouter, createWebHistory } from 'vue-router'
 import MainLayoutVue from '@/layouts/MainLayout.vue'
+import requireAuth from './middleware/requireAuth'
+import middlewarePipeline from './middlewarePipeline'
+import { useAuthStore } from '@/stores/auth'
 const routes = [
   {
     path: '/',
     component: MainLayoutVue,
-    requiresAuth: true,
+    middleware: [requireAuth],
     children: [
       {
         path: '/',
         name: 'home-page',
         component: () => import('@/pages/Home.vue'),
         meta: {
-          requiresAuth: true,
+          middleware: [requireAuth],
           headerTitle: 'Home',
           searchConfig: {},
           storeConfig: {},
@@ -22,7 +25,7 @@ const routes = [
         name: 'dashboard-page',
         component: () => import('@/pages/Dashboard.vue'),
         meta: {
-          requiresAuth: true,
+          middleware: [requireAuth],
           headerTitle: 'Dashboard',
           searchConfig: {},
           storeConfig: {},
@@ -33,7 +36,7 @@ const routes = [
         name: 'about-page',
         component: () => import('@/pages/About.vue'),
         meta: {
-          requiresAuth: true,
+          middleware: [requireAuth],
           headerTitle: 'About',
           searchConfig: {},
           storeConfig: {},
@@ -63,8 +66,25 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async () => {
-  // check auth
+router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+  const authStore = useAuthStore()
+
+  if (!to.meta.middleware) {
+    return next()
+  }
+  const middleware = to.meta.middleware as any
+
+  const context = {
+    to,
+    from,
+    next,
+    authStore,
+  }
+
+  return middleware[0]({
+    ...context,
+    next: middlewarePipeline(context, middleware, 1),
+  })
 })
 
 export default router

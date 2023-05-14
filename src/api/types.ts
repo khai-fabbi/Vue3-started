@@ -1,3 +1,9 @@
+export type ResultResponse<D> = {
+  status?: string
+  error?: boolean
+  data: D
+  time?: Date
+}
 export interface IUser {
   name: string
   email: string
@@ -28,8 +34,8 @@ export interface ISignUpInput {
 }
 
 export interface ILoginResponse {
-  status: string
-  access_token: string
+  refresh: string
+  access: string
 }
 
 export interface ISignUpResponse {
@@ -38,10 +44,10 @@ export interface ISignUpResponse {
 }
 
 export interface IUserResponse {
-  status: string
-  data: {
-    user: IUser
-  }
+  id: string
+  email: string
+  name: string | null
+  avatar: string
 }
 
 export interface IPostRequest {

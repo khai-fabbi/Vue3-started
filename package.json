@@ -14,8 +14,10 @@
     "cm": "cz"
   },
   "dependencies": {
+    "@types/js-cookie": "^3.0.3",
     "axios": "^1.4.0",
     "daisyui": "^2.51.6",
+    "js-cookie": "^3.0.5",
     "pinia": "^2.0.36",
     "sass": "^1.62.1",
     "vue": "^3.2.47",
